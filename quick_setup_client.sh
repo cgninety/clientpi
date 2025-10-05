@@ -40,14 +40,16 @@ echo -e "${YELLOW}Configuration Setup${NC}"
 echo ""
 
 # Host IP
-read -p "Enter Host Pi IP address (e.g., 192.168.1.112): " HOST_IP
+read -p "Enter Host Pi IP address [192.168.1.112]: " HOST_IP
+HOST_IP=${HOST_IP:-192.168.1.112}
 while [[ ! $HOST_IP =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; do
     echo -e "${RED}Invalid IP address format${NC}"
     read -p "Enter Host Pi IP address: " HOST_IP
 done
 
-# Client ID
-read -p "Enter unique Client ID (e.g., sensor_001, sensor_kitchen): " CLIENT_ID
+# Client ID  
+read -p "Enter unique Client ID [sensor_node1]: " CLIENT_ID
+CLIENT_ID=${CLIENT_ID:-sensor_node1}
 while [[ -z "$CLIENT_ID" ]]; do
     echo -e "${RED}Client ID cannot be empty${NC}"
     read -p "Enter unique Client ID: " CLIENT_ID
