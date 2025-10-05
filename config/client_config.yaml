@@ -1,0 +1,66 @@
+# Client Configuration for IoT Sensor Network
+
+# Client identification
+client_id: "pi_client_001"
+
+# Sensor configuration
+sensor:
+  type: "DHT11"  # DHT11, DHT22, DS18B20, BMP280, Mock
+  pin: 4         # GPIO pin for DHT sensors
+  update_interval: 30  # seconds between readings
+  max_errors: 5        # maximum consecutive errors before marking unhealthy
+
+# MQTT configuration
+mqtt:
+  host: "192.168.1.112"  # Host Pi IP
+  port: 8883             # MQTT port (8883 for TLS, 1883 for plain)
+  username: ""           # MQTT username (leave empty if not using auth)
+  password: ""           # MQTT password (leave empty if not using auth)
+  use_tls: true          # Enable TLS encryption
+  ca_cert: "/etc/ssl/certs/ca-certificates.crt"  # CA certificate path
+  cert_file: ""          # Client certificate (if using client certs)
+  key_file: ""           # Client key file (if using client certs)
+  keepalive: 60          # Keep alive interval
+  qos: 1                 # Default QoS level
+  heartbeat_interval: 30 # Heartbeat interval in seconds
+  max_reconnect_attempts: 10
+
+# Modbus TCP server configuration (optional)
+modbus:
+  enabled: false         # Enable Modbus TCP server
+  host: "0.0.0.0"       # Bind address
+  port: 5020            # Modbus TCP port
+  slave_id: 1           # Modbus slave ID
+  
+  # Register mappings
+  registers:
+    temperature: 1       # Holding register for temperature (x10)
+    humidity: 2          # Holding register for humidity (x10)
+    status: 3            # Coil for sensor status
+
+# Logging configuration
+logging:
+  level: "INFO"          # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  log_dir: "logs"        # Log directory
+  max_size: "10MB"       # Maximum log file size
+  backup_count: 5        # Number of backup log files
+  json_logging: false    # Enable JSON structured logging
+
+# Health monitoring
+health:
+  check_interval: 60     # Health check interval in seconds
+  sensor_timeout: 10     # Sensor read timeout in seconds
+  watchdog_enabled: true # Enable watchdog timer
+
+# Debug and development
+debug:
+  mock_mode: false       # Use mock sensors and MQTT
+  console_enabled: true  # Enable debug console
+  web_console_port: 8081 # Web-based debug console port
+
+# System configuration
+system:
+  service_name: "iot-sensor-client"
+  pid_file: "/var/run/iot-client.pid"
+  user: "iot"
+  group: "iot"
